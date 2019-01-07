@@ -19,9 +19,19 @@ class ContatoConfeiteiro(models.Model):
     confeitero = models.ForeignKey(Confeiteiro, on_delete=models.CASCADE)
 
 class Postagem(models.Model):
+    CATEGORIA_CHOICES = (
+        ('Bolo de Aniversário', 'Bolo de Aniversário'),
+        ('Bolo de Casamento', 'Bolo de Casamento'),
+        ('Cupcake', 'Cupcake'),
+        ('Rocambole', 'Rocambole'),
+        ('Bolo de camadas', 'Bolo de camadas'),
+
+    )
     titulo = models.CharField(max_length=50)
     descricao = models.TextField(max_length=250)
+    categoria = models.CharField('Categoria', max_length=40, choices=CATEGORIA_CHOICES)
     imagem = models.ImageField(null=True, blank=True, upload_to='galeria/postagem/confeiteiro')
+    preco = models.DecimalField('Preço', max_digits=8, decimal_places=2, default=0)
     confeitero = models.ForeignKey(Confeiteiro, on_delete=models.CASCADE)
 
     class Meta:
