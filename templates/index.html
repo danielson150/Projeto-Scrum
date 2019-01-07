@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/estilo.css' %}" />
+</head>
+
+<body>
+    <!-- Menu de navegação -->
+    <nav class="nav-extended deep-purple">
+        <!-- Menu principal -->
+        <div class="nav-wrapper">
+            <div class="container">
+                <!-- logo do site -->
+                <a href="#" class="brand-logo left ">
+                    <img src="{% static 'img/guest.png' %}" alt="logo do site" class="logo">
+                </a>
+                <!-- botão para login -->
+                <a class="right waves-effect waves-purple" href="{% url 'cadastrar' %}">
+                    cadastrar<i class="material-icons right">person</i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Menu secundario -->
+        <div class="nav-content container">
+            <ul class="tabs tabs-transparent">
+                <li class="tab"><a href="#teste1" class="active">Inicio</a></li>
+                <li class="tab"><a href="#teste2">Confeiteiros</a></li>
+                <li class="tab"><a href="#teste3">Solicitações</a></li>
+                <li class="tab"><a href="#teste4">Anunciar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Separadores -->
+    <!-- Página inicial -->
+    <div id="teste1" class="col s12 t">
+        <!-- Parallax inicial -->
+        <div class="parallax-container">
+            <!-- Imagem para o parallax -->
+            <div class="parallax"><img src="{% static 'img/cupcake.jpeg' %}"></div>
+
+            <!-- Caixa auxiliar ao parallax -->
+            <div class="row blur-black">
+                <div class="container">
+                    <!-- Boas vindas -->
+                    <div class="col s12 m6 full-height valign-wrapper center-align">
+                        <h3 class="purple-text text-lighten-3">Seja bem vindo ao site Confeiteiros Online</h3>
+                    </div>
+
+                    <!-- Login -->
+                    <div class="col s12 m6 full-height valign-wrapper .hide-on-small-only">
+                        <form action="" class="center blue-grey darken-4 pdg-50">
+                            <label>Entre na sua conta</label>
+                            <!-- Login -->
+                            <div class="input-field">
+                                <input id="login" type="text" class="validate purple lighten-4">
+                                <label for="login">Login</label>
+                            </div>
+                            <!-- Senha -->
+                            <div class="input-field">
+                                <input id="senha" type="password" class="validate purple lighten-4">
+                                <label for="senha">Senha</label>
+                            </div>
+                            <input type="submit" value="entrar" class="btn purple">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Caixa para  separação -->
+        <div class="box-margin"></div>
+
+        <!-- Sobre -->
+        <div class="divider"></div>
+        <div class="container center-align">
+            <h3>Titulo</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis consectetur earum quis dolor ea, ut
+                aliquam nostrum accusamus illum! Quasi, laboriosam consequuntur excepturi libero impedit eius inventore
+                aperiam aliquam quo!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto suscipit esse necessitatibus saepe,
+                rerum explicabo nostrum nemo eligendi perspiciatis fugiat minima, dolorem fugit est praesentium. Soluta
+                sit suscipit facere cum.
+            </p>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates ipsam ea eaque quo esse incidunt rerum repellendus illum voluptas accusantium dolorum dolorem dicta ratione, eligendi eius distinctio soluta expedita sunt?</p>
+        </div>
+
+
+
+        <!-- Slide -->
+        <div class="slider white">
+            <ul class="slides">
+                <li>
+                    <img src="{% static 'img/beatycake.jpeg' %}"> <!-- random image -->
+                    <div class="caption center-align">
+                        <h3>This is our big Tagline!</h3>
+                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                    </div>
+                </li>
+                <li>
+                    <img src="{% static 'img/chococake.jpeg' %}"> <!-- random image -->
+                    <div class="caption left-align">
+                        <h3>Left Aligned Caption</h3>
+                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                    </div>
+                </li>
+                <li>
+                    <img src="{% static 'img/manycake.jpeg' %}"> <!-- random image -->
+                    <div class="caption right-align">
+                        <h3>Right Aligned Caption</h3>
+                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                    </div>
+                </li>
+                <li>
+                    <img src="{% static 'img/marriecake.jpeg' %}"> <!-- random image -->
+                    <div class="caption center-align">
+                        <h3>This is our big Tagline!</h3>
+                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Rodapé -->
+        <footer class="page-footer blue-grey darken-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Confeiteiros online</h5>
+                        <p class="grey-text text-lighten-4">Cadastra-se e tenha acesso a todas as funcionalidades do
+                            site.</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">Links</h5>
+                        <ul>
+                            <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2014 Copyright Text
+                    <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                </div>
+            </div>
+        </footer>
+
+    </div> <!-- Pequena apresentação -->
+
+    <!-- Página Confeiteiros -->
+    <div id="teste2" class="col s12 t light-blue">
+        <h1>Confeiteiros cadastrados</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat sapiente quis aliquid fuga nihil ad
+            enim a
+            quae quisquam doloremque explicabo vero eos minima eveniet autem nobis, vel voluptatibus inventore?</p>
+    </div>
+
+    <!-- Página Solicitações por parte dos clientes -->
+    <div id="teste3" class="col s12 t green">
+        <h1>Solicitações dos clientes</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat sapiente quis aliquid fuga nihil ad
+            enim a
+            quae quisquam doloremque explicabo vero eos minima eveniet autem nobis, vel voluptatibus inventore?</p>
+    </div>
+
+    <!-- Página realizar pedido -->
+    <div id="teste4" class="col s12 t red">
+        <h1>Nova solicitação</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat sapiente quis aliquid fuga nihil ad
+            enim a
+            quae quisquam doloremque explicabo vero eos minima eveniet autem nobis, vel voluptatibus inventore?</p>
+    </div>
+
+
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
