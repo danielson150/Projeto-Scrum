@@ -24,6 +24,11 @@ class Postagem(models.Model):
     imagem = models.ImageField(null=True, blank=True, upload_to='galeria/postagem/confeiteiro')
     confeitero = models.ForeignKey(Confeiteiro, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = 'Postagens'
+        verbose_name = 'Postagem'
+
+
 class Cliente(models.Model):
     nome = models.CharField(max_length=50)
     login = models.CharField(max_length=15)
@@ -41,8 +46,18 @@ class ClientePublicacao(models.Model):
     finalizado = models.BooleanField()
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = 'Cliente Publicações'
+        verbose_name = 'Cliente Publicação'
+
+
 class Avaliacao(models.Model):
     descricao = models.TextField(max_length=250)
     nota = models.DecimalField(max_digits=4, decimal_places=2)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     confeitero = models.ForeignKey(Confeiteiro, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'Avaliações'
+        verbose_name = 'Avaliação'
+
