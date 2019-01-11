@@ -4,14 +4,14 @@ from django.db import models
 class Confeiteiro(models.Model):
     nome = models.CharField(max_length=50)
     login = models.CharField(max_length=15)
-    Senha = models.CharField(max_length=15)
+    senha = models.CharField(max_length=15)
     foto_perfil = models.ImageField(null=True, blank=True, upload_to='galeria/perfil')
     foto_capa = models.ImageField(null=True, blank=True, upload_to='galeria/perfil/capa')
-    descricao = models.TextField(max_length=250)
+    descricao = models.TextField(null=True, blank=True, max_length=250)
     email = models.CharField(max_length=50)
-    estado = models.CharField(max_length=20)
-    cidade = models.CharField(max_length=20)
-    endereco = models.CharField(max_length=50)
+    estado = models.CharField(null=True, blank=True, max_length=20)
+    cidade = models.CharField(null=True, blank=True, max_length=20)
+    endereco = models.CharField(null=True, blank=True, max_length=50)
 
 class ContatoConfeiteiro(models.Model):
     numero = models.CharField(max_length=15)

@@ -3,30 +3,30 @@ from core import models
 
 # Personalização do site admin
 class ConfeiteiroAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'login', 'foto_perfil', 'email', 'estado', 'cidade')
+    list_display = ('id', 'nome', 'login', 'foto_perfil', 'email', 'estado', 'cidade')
     list_filter = ['estado', 'cidade']
     search_fields = ['nome', 'login', 'email']
     fieldsets = [
-        ('Dados pessoais', {'fields': ['nome', 'login', 'Senha']}),
+        ('Dados pessoais', {'fields': ['nome', 'login', 'senha', 'email']}),
         ('Imagens descritivas', {'fields': ['foto_perfil', 'foto_capa']}),
         (None, {'fields': ['descricao']}),
         ('Localização', {'fields': ['estado', 'cidade', 'endereco']}),
     ]
 
 class ClienteAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'login')
+    list_display = ('id', 'nome', 'login')
     search_fields = ['nome', 'login']
     fieldsets = [
         ('Dados pessoais', {'fields': ['nome', 'login', 'Senha']}),
     ]
 
 class PostagemAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'descricao', 'imagem')
+    list_display = ('id', 'titulo', 'descricao', 'imagem')
     list_filter = ['confeitero']
     search_fields = ['confeitero']
 
 class ClientePublicacaoAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'descricao', 'finalizado')
+    list_display = ('id', 'titulo', 'descricao', 'finalizado')
     list_filter = ['finalizado']
     fieldsets = [
         ('Dados da publicação', {'fields': ['titulo', 'descricao']}),
@@ -36,17 +36,17 @@ class ClientePublicacaoAdmin(admin.ModelAdmin):
     ]
 
 class ContatoConfeiteiroAdmin(admin.ModelAdmin):
-    list_display = ('numero', 'whatsapp', 'confeitero')
+    list_display = ('id', 'numero', 'whatsapp', 'confeitero')
     list_filter = ['whatsapp', 'confeitero']
     search_fields = ['numero']
 
 class ContatoClienteAdmin(admin.ModelAdmin):
-    list_display = ('numero', 'whatsapp', 'cliente')
+    list_display = ('id', 'numero', 'whatsapp', 'cliente')
     list_filter = ['whatsapp', 'cliente']
     search_fields = ['numero']
 
 class AvaliacaoAdmin(admin.ModelAdmin):
-    list_display = ('descricao', 'nota', 'cliente', 'confeitero')
+    list_display = ('id', 'descricao', 'nota', 'cliente', 'confeitero')
     list_filter = ['cliente', 'confeitero']
     search_fields = ['descricao']
     fieldsets = [
