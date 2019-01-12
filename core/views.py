@@ -8,12 +8,80 @@ def home(request):
 
 
 def cadastrar(request):
-    return render(request, 'cadastro.html')
+    flash_message = ''
+
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        email = request.POST.get('email')
+        login = request.POST.get('login')
+        senha = request.POST.get('senha')
+        repete_senha = request.POST.get('repetesenha')
+        tipo_de_usuario = request.POST.get('tipo')
+
+        if tipo_de_usuario == 'confeiteiro':
+            resposta_do_cadastro = cadastrar_novo_confeiteiro(nome, email, login, senha, repete_senha)
+            if not resposta_do_cadastro[0]:
+                flash_message = resposta_do_cadastro[1]
+        else:
+            resposta_do_cadastro = cadastrar_novo_cliente(nome, login, senha, repete_senha)
+            if not resposta_do_cadastro[0]:
+                flash_message = resposta_do_cadastro[1]
+
+    return render(request, 'cadastro.html', {'flash_message': flash_message})
 
 
 '''
 Funções a partir desta parte são apenas operacionais, o controle das views fica acima
 '''
+
+# Funções para a gerencia de confeiteiros
+def seleciona_todos_os_confeiteiros_cadastrados():
+    return Confeiteiro.objects.all()
+
+
+def cadastrar_novo_confeiteiro(nome, email, login, senha, senha_repetida):
+    if senha != senha_repetida:
+        return False, 'Senhas diferentes'
+    else:
+        if len(nome) == 0 or len(email) == 0 or len(login) == 0 or len(senha) == 0:
+            return False, 'Todos os campos são obrigatórios'
+        else:
+            confeiteiro = Confeiteiro(nome=nome, email=email, login=login, senha=senha)
+            confeiteiro.save()
+    return True, 'Cadastrado com sucesso!'
+
+
+def selecionar_confeiteiro_por_id(id):
+    return Confeiteiro.objects.all().filter(id=id)
+
+
+def deletar_confeiteiro_por_id(pk):
+    confeiteiro = Confeiteiro.objects.get(pk=pk)
+    confeiteiro.delete()
+
+
+# Funções para a gerencia de clientes
+def cadastrar_novo_cliente(nome, login, senha, senha_repetida):
+    if senha != senha_repetida:
+        return False, 'Senhas diferentes'
+    else:
+        if len(nome) == 0 or len(login) == 0 or len(senha) == 0:
+            return False, 'Todos os campos são obrigatórios'
+        else:
+            confeiteiro = Cliente(nome=nome, login=login, Senha=senha)
+            confeiteiro.save()
+    return True, 'Cadastrado com sucesso!'
+
+
+# funções para Controle de sessão
+def adiciona_elemento_a_session(request, chave, valor):
+    request.session[chave] = valor
+
+
+def recuperar_elemento_da_session(request, chave):
+    return request.session.get(chave, '')
+
+
 def logar(request, login, senha):
     logado_com_sucesso = False
     tipo_de_usuario = ''
@@ -50,30 +118,3 @@ def deslogar(request):
         del request.session['nome_do_usuario']
         del request.session['tipo_de_usuario']
     return redirect('/')
-
-
-# Funções para a gerencia de confeiteiros
-def seleciona_todos_os_confeiteiros_cadastrados():
-    return Confeiteiro.objects.all()
-
-
-def cadastrar_novo_confeiteiro(nome, email, login, senha):
-    confeiteiro = Confeiteiro(nome=nome, email=email, login=login, senha=senha)
-    confeiteiro.save()
-
-
-def selecionar_confeiteiro_por_id(id):
-    return Confeiteiro.objects.all().filter(id=id)
-
-
-def deletar_confeiteiro_por_id(pk):
-    confeiteiro = Confeiteiro.objects.get(pk=pk)
-    confeiteiro.delete()
-
-# funções para Controle de sessão
-def adiciona_elemento_a_session(request, chave, valor):
-    request.session[chave] = valor
-
-
-def recuperar_elemento_da_session(request, chave):
-    return request.session.get(chave, '')
