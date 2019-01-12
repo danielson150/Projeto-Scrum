@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from core.forms import *
 from core.models import *
 
@@ -11,13 +11,54 @@ def cadastrar(request):
     return render(request, 'cadastro.html')
 
 
-# Metodos para a gerencia de confeiteiros
+'''
+Funções a partir desta parte são apenas operacionais, o controle das views fica acima
+'''
+def logar(request, login, senha):
+    logado_com_sucesso = False
+    tipo_de_usuario = ''
+    nome_do_usuario = ''
+    id_do_usuario = -1
+
+    if len(Confeiteiro.objects.all().filter(login=login, Senha=senha)) == 1:
+        confeiteiro = Confeiteiro.objects.all().filter(login=login, Senha=senha)
+        logado_com_sucesso = True
+        tipo_de_usuario = 'confeiteiro'
+        id_do_usuario = confeiteiro[0].id
+        nome_do_usuario = confeiteiro[0].nome
+
+    elif len(Cliente.objects.all().filter(login=login, Senha=senha)) == 1:
+        cliente = Cliente.objects.all().filter(login=login, Senha=senha)
+        logado_com_sucesso = True
+        tipo_de_usuario = 'cliente'
+        id_do_usuario = cliente[0].id
+        nome_do_usuario = cliente[0].nome
+
+    if logado_com_sucesso:
+        adiciona_elemento_a_session(request, 'id_do_usuario', id_do_usuario)
+        adiciona_elemento_a_session(request, 'login_do_usuario', login)
+        adiciona_elemento_a_session(request, 'nome_do_usuario', nome_do_usuario)
+        adiciona_elemento_a_session(request, 'tipo_de_usuario', tipo_de_usuario)
+
+    return logado_com_sucesso
+
+
+def deslogar(request):
+    if recuperar_elemento_da_session(request, 'login'):
+        del request.session['id_do_usuario']
+        del request.session['login_do_usuario']
+        del request.session['nome_do_usuario']
+        del request.session['tipo_de_usuario']
+    return redirect('/')
+
+
+# Funções para a gerencia de confeiteiros
 def seleciona_todos_os_confeiteiros_cadastrados():
     return Confeiteiro.objects.all()
 
 
-def cadastrar_novo_confeiteiro(nome, email, senha, contato):
-    confeiteiro = Confeiteiro(nome=nome, email=email, senha=senha, contato=contato)
+def cadastrar_novo_confeiteiro(nome, email, login, senha):
+    confeiteiro = Confeiteiro(nome=nome, email=email, login=login, senha=senha)
     confeiteiro.save()
 
 
@@ -28,3 +69,11 @@ def selecionar_confeiteiro_por_id(id):
 def deletar_confeiteiro_por_id(pk):
     confeiteiro = Confeiteiro.objects.get(pk=pk)
     confeiteiro.delete()
+
+# funções para Controle de sessão
+def adiciona_elemento_a_session(request, chave, valor):
+    request.session[chave] = valor
+
+
+def recuperar_elemento_da_session(request, chave):
+    return request.session.get(chave, '')
