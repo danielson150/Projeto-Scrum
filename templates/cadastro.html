@@ -6,226 +6,83 @@
     <meta charset="utf8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="{% static 'css/estilo.css' %}" />
 </head>
 
 <body>
     <!-- Menu de navegação -->
-    <nav class="nav-extended nav-fixed deep-purple">
-        <!-- Menu principal -->
-        <div class="nav-wrapper">
-            <div class="container">
-                <!-- logo do site -->
-                <a href="#" class="brand-logo left ">
-                    <img src="img/guest.png" alt="logo do site" class="logo">
-                </a>
-                <!-- botão para login -->
-                <a class="right waves-effect waves-purple">
-                    cadastrar<i class="material-icons right">person</i>
-                </a>
-            </div>
-        </div>
-
+    <nav class="navbar cor-padrao">
+        <a class="navbar-brand text-light">Bolos e Doces</a>
+        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Entrar / Cadastrar</button>
     </nav>
 
+    <div class="box-margin"></div>
+
+    <div>
+        <p>{{ flash_message }}</p>
+    </div>
+
     <!-- Container para cadastro -->
-    <div class="center-align">
-        <p class="flow-text">Preencha os campos abaixo para efetuar o seu cadastro</p>
+    <div class="container container-cadastro">
+        <h1>
+            <i class="material-icons">person</i>
+            Cadastro do Usuário
+        </h1>
         <p>Os campos com * são obrigatórios.</p>
 
-        <div class="divider"></div>
+        <form method="post">
+            {% csrf_token %}
+            <p> <label for="nome">Nome *</label>
+                <input id="nome" name="nome" type="text" placeholder="Digite o seu nome"></p>
 
-    <div class="row">
-                <!-- Confeiteiro -->
-        <div id="confeiteiro" class="col s12 m6">
-            <p class="flow-text">Novo confeiteiro</p>
-            <div class="container">
-                <form action="">
-                    <!--nome-->
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">face</i>
-                            <input id="INome" type="text" class="validate blue-grey lighten-5">
-                            <label for="INome">Nome Completo</label>
-                        </div>
-                    </div>
+            <p> <label for="email">Email *</label>
+                <input id="email" name="email" type="text" placeholder="Digite o seu email"></p>
 
-                    <!-- Dados para login -->
-                    <div class="row">
-                        <!-- Login -->
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">person</i>
-                            <input id="ILogin" type="text" class="validate blue-grey lighten-5">
-                            <label for="ILogin">Login</label>
-                        </div>
-                        <!-- Senha -->
-                        <div class="input-field col s12 m6">
-                            <i class="material-icons prefix">remove_red_eye</i>
-                            <input id="ISenha" type="password" class="validate blue-grey lighten-5">
-                            <label for="ISenha">Senha</label>
-                        </div>
-                        <!-- repetir senha -->
-                        <div class="input-field col s12 m6">
-                            <i class="material-icons prefix">remove_red_eye</i>
-                            <input id="IRepeteSenha" type="password" class="validate blue-grey lighten-5">
-                            <label for="IRepeteSenha">Repetir senha</label>
-                        </div>
-                    </div>
+            <p> <label for="login">Login *</label>
+                <input id="login" name="login" type="text" placeholder="Digite um login válido"></p>
 
-                    <!-- Imagens -->
-                    <div class="row file-path-wrapper">
-                        <!--Perfil-->
-                        <div class="col s12 m6 file-field input-field">
-                            <div class="btn deep-purple">
-                                <span>Perfil
-                                    <i class="material-icons">add_a_photo</i>
-                                </span>
-                                <input type="file">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text">
-                            </div>
-                        </div>
-                        <!--Capa-->
-                        <div class="col s12 m6 file-field input-field">
-                            <div class="btn deep-purple">
-                                <span>Capa
-                                    <i class="material-icons">add_a_photo</i>
-                                </span>
-                                <input type="file">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text">
-                            </div>
-                        </div>
-                    </div>
+            <p> <label for="senha">Senha *</label>
+                <input id="senha" name="senha" type="password" placeholder="Digite uma senha"></p>
 
-                    <!-- dados adicionais -->
-                    <div class="row">
-                        <!--Descrição-->
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">format_align_center</i>
-                            <textarea id="IDescricao" type="text" class="validate materialize-textarea blue-grey lighten-5"></textarea>
-                            <label for="IDescricao">Descrição</label>
-                        </div>
-                        <!--Email-->
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">email</i>
-                            <input id="IEmail" type="text" class="validate blue-grey lighten-5">
-                            <label for="IEmail">Email</label>
-                        </div>
-                    </div>
+            <p> <label for="repetesenha">Repita a senha *</label>
+                <input id="repetesenha" name="repetesenha" type="password" placeholder="Repita a senha"></p>
 
-                    <!-- Locallização -->
-                    <div class="row">
-                        <div class="input-field col s12 m6">
-                            <!--estado-->
-                            <i class="material-icons prefix">domain</i>
-                            <input id="IEstado" type="text" class="validate blue-grey lighten-5">
-                            <label for="IEstado">Estado</label>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <!--cidade-->
-                            <i class="material-icons prefix">location_city</i>
-                            <input id="ICidade" type="text" class="validate blue-grey lighten-5">
-                            <label for="ICidade">Cidade</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <!--logradouro-->
-                            <i class="material-icons prefix">place</i>
-                            <input id="ILogradouro" type="text" class="validate blue-grey lighten-5">
-                            <label for="ILogradouro">Logradouro</label>
-                        </div>
-                    </div>
-                    <!-- Submit -->
-                    <button class="btn waves-effect waves-light right deep-purple" type="submit" name="action">Cadastrar
-                        <i class="material-icons right">done_all</i>
-                    </button>
-                </form>
-            </div>
-        </div>
+            <p>
+                <select id="tipo-de-usuario" name="tipo">
+                    <option value="confeiteiro" selected>Confeiteiro</option>
+                    <option value="cliente">Cliente</option>
+                </select>
+            </p>
 
-        <div class="box-margin"></div>
-
-        <!-- Cliente -->
-        <div id="cliente" class="col s12 m6 auto-height">
-            <p class="flow-text">Novo cliente</p>
-            <div class="container">
-                <form action="">
-                    <!--nome-->
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">face</i>
-                            <input id="INome" type="text" class="validate blue-grey lighten-5">
-                            <label for="INome">Nome Completo</label>
-                        </div>
-                    </div>
-                    <!-- Dados para login -->
-                    <div class="row">
-                        <!-- Login -->
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">person</i>
-                            <input id="ILogin" type="text" class="validate blue-grey lighten-5">
-                            <label for="ILogin">Login</label>
-                        </div>
-                        <!-- Senha -->
-                        <div class="input-field col s12 m6">
-                            <i class="material-icons prefix">remove_red_eye</i>
-                            <input id="ISenha" type="password" class="validate blue-grey lighten-5">
-                            <label for="ISenha">Senha</label>
-                        </div>
-                        <!-- repetir senha -->
-                        <div class="input-field col s12 m6">
-                            <i class="material-icons prefix">remove_red_eye</i>
-                            <input id="IRepeteSenha" type="password" class="validate blue-grey lighten-5">
-                            <label for="IRepeteSenha">Repetir senha</label>
-                        </div>
-                    </div>
-                    <!-- Submit -->
-                    <button class="btn waves-effect waves-light right deep-purple" type="submit" name="action">Cadastrar
-                        <i class="material-icons right">done_all</i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
+            <!-- Submit -->
+            <button class="btn btn-success text-light" type="submit" name="action">Cadastrar</button>
+        </form>
     </div>
 
     <div class="box-margin"></div>
 
     <!-- Rodapé -->
-    <footer class="page-footer blue-grey darken-4">
+    <footer class="page-footer bg-dark">
+        <div class="box-margin"></div>
         <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Confeiteiros online</h5>
-                    <p class="grey-text text-lighten-4">Cadastra-se e tenha acesso a todas as funcionalidades do
-                        site.</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Links</h5>
-                    <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                    </ul>
-                </div>
+            <div class="col s12">
+                <h5 class="white-text">Confeiteiros online</h5>
+                <p class="grey-text text-lighten-4">Cadastra-se e tenha acesso a todas as funcionalidades do
+                    site.</p>
             </div>
         </div>
         <div class="footer-copyright">
             <div class="container">
-                © 2014 Copyright Text
-                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                © 2014 Copyright - Todos os direitos reservados
             </div>
         </div>
     </footer>
 
     <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -20,10 +20,22 @@
                 <a href="#" class="brand-logo left ">
                     <img src="{% static 'img/guest.png' %}" alt="logo do site" class="logo">
                 </a>
-                <!-- botão para login -->
-                <a class="right waves-effect waves-purple" href="{% url 'cadastrar' %}">
-                    cadastrar<i class="material-icons right">person</i>
-                </a>
+
+                {% if usuario_logado == True %}
+                    <!-- botão para deslogar-->
+                    <a class="right waves-effect waves-purple" href="{% url 'deslogar' %}">
+                        Sair da conta<i class="material-icons right">exit_to_app</i>
+                    </a>
+                    <!-- botão para o perfil -->
+                    <a class="right waves-effect waves-purple" href="{% url 'cadastrar' %}">
+                        Acessar perfil<i class="material-icons right">person</i>
+                    </a>
+                {% else %}
+                    <!-- botão para login -->
+                    <a class="right waves-effect waves-purple" href="{% url 'cadastrar' %}">
+                        cadastrar<i class="material-icons right">person</i>
+                    </a>
+                {% endif %}
             </div>
         </div>
 
@@ -33,7 +45,6 @@
                 <li class="tab"><a href="#teste1" class="active">Inicio</a></li>
                 <li class="tab"><a href="#teste2">Confeiteiros</a></li>
                 <li class="tab"><a href="#teste3">Solicitações</a></li>
-                <li class="tab"><a href="#teste4">Anunciar</a></li>
             </ul>
         </div>
     </nav>
@@ -56,16 +67,17 @@
 
                     <!-- Login -->
                     <div class="col s12 m6 full-height valign-wrapper .hide-on-small-only">
-                        <form action="" class="center blue-grey darken-4 pdg-50">
+                        <form method="post" class="center blue-grey darken-4 pdg-50">
+                            {% csrf_token %}
                             <label>Entre na sua conta</label>
                             <!-- Login -->
                             <div class="input-field">
-                                <input id="login" type="text" class="validate purple lighten-4">
+                                <input id="login" name="login" type="text" class="validate purple lighten-4">
                                 <label for="login">Login</label>
                             </div>
                             <!-- Senha -->
                             <div class="input-field">
-                                <input id="senha" type="password" class="validate purple lighten-4">
+                                <input id="senha" name="senha" type="password" class="validate purple lighten-4">
                                 <label for="senha">Senha</label>
                             </div>
                             <input type="submit" value="entrar" class="btn purple">
@@ -159,29 +171,211 @@
     </div> <!-- Pequena apresentação -->
 
     <!-- Página Confeiteiros -->
-    <div id="teste2" class="col s12 t light-blue">
-        <h1>Confeiteiros cadastrados</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat sapiente quis aliquid fuga nihil ad
-            enim a
-            quae quisquam doloremque explicabo vero eos minima eveniet autem nobis, vel voluptatibus inventore?</p>
+    <div id="teste2" class="col s12 container">
+        <div class="listagem">
+            <!-- card -->
+            {% for confeiteiro in confeiteiros %}
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{% static 'img/manycake.jpeg' %}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">{{ confeiteiro.nome }}</span>
+                            <p>{{ confeiteirodescricao }}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">Acessar perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- card -->
+            <h3>Testes</h3>
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{% static 'img/manycake.jpeg' %}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- card -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{% static 'img/manycake.jpeg' %}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- card -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{% static 'img/manycake.jpeg' %}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- card -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{% static 'img/manycake.jpeg' %}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <!-- Página Solicitações por parte dos clientes -->
-    <div id="teste3" class="col s12 t green">
+    <div id="teste3" class="col s12 container">
         <h1>Solicitações dos clientes</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat sapiente quis aliquid fuga nihil ad
-            enim a
-            quae quisquam doloremque explicabo vero eos minima eveniet autem nobis, vel voluptatibus inventore?</p>
-    </div>
 
-    <!-- Página realizar pedido -->
-    <div id="teste4" class="col s12 t red">
-        <h1>Nova solicitação</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat sapiente quis aliquid fuga nihil ad
-            enim a
-            quae quisquam doloremque explicabo vero eos minima eveniet autem nobis, vel voluptatibus inventore?</p>
-    </div>
+        <div class="listagem">
+            <!-- card -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{% static 'img/manycake.jpeg' %}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- card -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{% static 'img/manycake.jpeg' %}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- card -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{% static 'img/manycake.jpeg' %}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- card -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{% static 'img/manycake.jpeg' %}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- card -->
+            <div class="row">
+                <div class="col s12 m8 offset-m2">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{% static 'img/manycake.jpeg' %}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Card Title</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.
+                                I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 
     <!--JavaScript at end of body for optimized loading-->
