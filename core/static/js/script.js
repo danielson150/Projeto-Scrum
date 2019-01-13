@@ -7,3 +7,7 @@ $(document).ready(function () {
         swipeable: true,
     });
 });
+
+function mostrarChat(){
+    document.querySelector('.bate-papo').classList.toggle("mostrar-bate-papo");
+}
