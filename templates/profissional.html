@@ -1,0 +1,263 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/estilo.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/css-perfil.css' %}" />
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <!-- Menu de navegação -->
+    <nav class="navbar cor-padrao">
+        <a class="navbar-brand text-light">Bolos e Doces</a>
+        <button class="btn btn-dark my-2 my-sm-0" type="submit" onclick="mostrarChat()">Chat</button>
+    </nav>
+
+    <div class="expand">
+        <div class="box-margin"></div>
+
+        <!-- Página do proficional -->
+        <div class="container">
+            <!-- tabs -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Serviços</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Meu cadastro</a>
+                </li>
+
+            </ul>
+
+            <!-- Conteúdo da página -->
+            <div class="tab-content" id="myTabContent">
+
+                <!-- Serviços -->
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h1>Serviços</h1>
+                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#cadastrarServico">Inserir serviços</button>
+                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#avaliacoes">Avaliações</button>
+
+                    <div class="box-margin"></div>
+
+                    <div id="listagem-de-serviços">
+                        {% if postagens %}
+
+                        <div class="card-columns row">
+                            {% for post in postagens %}
+                            <div class="card col-sm-12 col-md-6 col-lg-4">
+                                <img class="card-img-top" src="/media/{{ post.imagem }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ post.titulo }}</h5>
+                                    <p class="card-text">{{ post.descricao }}</p>
+                                    <p class="card-text">Categoria: {{ post.categoria }}</p>
+                                    <p class="card-text">Preço: {{ post.preco }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div id="servico-vazio">
+                            <img src="https://img.icons8.com/cotton/1600/double-chocolate-cake.png" alt="bolo">
+                            <p>Você não possui serviços publicados no momento.</p>
+                            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#cadastrarServico">Publicar</button>
+                        </div>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+
+                <!-- Cadastro do confeiteiro -->
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <!-- Container para listagem dos dados -->
+                    <div class="container container-cadastro">
+                        <h1>
+                            <i class="material-icons">person</i>
+                            Atualizar informações
+                        </h1>
+
+                        <form method="post" enctype="multipart/form-data" action="/dashboard/postar/">
+                            {% csrf_token %}
+                            <div>
+                                <label for="imagem">Imagem</label>
+                                <input type="file" id="imagem" name="imagem">
+                            </div>
+                            <div class="form-group">
+                                <label for="titulo" class="col-form-label">Titulo:</label>
+                                <input type="text" class="form-control" id="titulo" name="titulo">
+                            </div>
+                            <div class="form-group">
+                                <label for="descricao" class="col-form-label">Descrição:</label>
+                                <textarea class="form-control" id="descricao" name="descricao"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="preco" class="col-form-label">Preço:</label>
+                                <input type="number" min="0" step="0.5" class="form-control" id="preco" name="preco">
+                            </div>
+                            <div class="form-group">
+                                <select name="tipo" id="tipo">
+                                    <option value="casamento">Casamento</option>
+                                    <option value="comum">Fechar</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Publicar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="box-margin"></div>
+        </div>
+    </div>
+
+    <!-- Modal de cadastro de serviços -->
+    <div class="modal fade" id="cadastrarServico" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cadastrar serviço</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulário cadastrar serviço -->
+                    <form method="post" enctype="multipart/form-data" action="/dashboard/postar/">
+                        {% csrf_token %}
+                        <div>
+                            <label for="imagem">Imagem</label>
+                            <input type="file" id="imagem" name="imagem">
+                        </div>
+                        <div class="form-group">
+                            <label for="titulo" class="col-form-label">Titulo:</label>
+                            <input type="text" class="form-control" id="titulo" name="titulo">
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao" class="col-form-label">Descrição:</label>
+                            <textarea class="form-control" id="descricao" name="descricao"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="preco" class="col-form-label">Preço:</label>
+                            <input type="number" min="0" step="0.5" class="form-control" id="preco" name="preco">
+                        </div>
+                        <div class="form-group">
+                            <select name="tipo" id="tipo">
+                                <option value="casamento">Casamento</option>
+                                <option value="comum">Fechar</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Publicar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para a listagem de avaliações -->
+    <div class="modal fade" id="avaliacoes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Avaliações</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-dark">
+                    <!-- Cards de avaliações -->
+                    <div class="card card-avaliacao">
+                        <div class="card-header">
+                            Nome do Cliente
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Titulo da descrição</h5>
+                            <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros cadastrados.</p>
+                            <a href="#" class="btn btn-outline-info">Nota 10.0</a>
+                        </div>
+                    </div>
+
+                    <!-- Cards de avaliações -->
+                    <div class="card card-avaliacao">
+                        <div class="card-header">
+                            Nome do Cliente
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Titulo da descrição</h5>
+                            <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros cadastrados.</p>
+                            <a href="#" class="btn btn-outline-info">Nota 10.0</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Area para p bate papo -->
+    <div class="bate-papo">
+        <div class="card card-avaliacao">
+            <div class="card-header">
+                <p>Chat</p>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="mostrarChat()">Fechar</button>
+            </div>
+            <div class="card-body">
+                <div class="chat-msg">
+                    <h5 class="card-title">Titulo da descrição</h5>
+                    <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros cadastrados.</p>
+                </div>
+                <div class="chat-msg">
+                    <h5 class="card-title">Titulo da descrição</h5>
+                    <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros cadastrados.</p>
+                </div>
+                <div class="chat-msg">
+                    <h5 class="card-title">Titulo da descrição</h5>
+                    <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros cadastrados.</p>
+                </div>
+                <div class="chat-msg">
+                    <h5 class="card-title">Titulo da descrição</h5>
+                    <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros cadastrados.</p>
+                </div>
+                <div class="chat-msg">
+                    <h5 class="card-title">Titulo da descrição</h5>
+                    <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros cadastrados.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="page-footer bg-dark">
+        <div class="box-margin"></div>
+        <div class="container">
+            <div>
+                <h5 class="white-text">Confeiteiros online</h5>
+                <p class="grey-text text-lighten-4">Cadastra-se e tenha acesso a todas as funcionalidades do
+                    site.</p>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2014 Copyright - Todos os direitos reservados
+            </div>
+        </div>
+    </footer>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
