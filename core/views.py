@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from core.forms import *
 from core.models import *
+from django.core.files.storage import FileSystemStorage
 
 
 # Create your views here.
@@ -11,11 +12,10 @@ def home(request):
         senha = request.POST.get('senha')
         if logar(request, login, senha):
             if recuperar_elemento_da_session(request, 'tipo_de_usuario') == 'confeiteiro':
-                return redirect('/admin')
+                return redirect('/dashboard')
             else:
-                return redirect('/admin')
+                return redirect('/cliente')
 
-    # dados que serão enviados ao template
     dicionario = {
         'confeiteiros': seleciona_todos_os_confeiteiros_cadastrados(),
         'usuario_logado': recuperar_elemento_da_session(request, 'usuario_logado'),
@@ -47,9 +47,75 @@ def cadastrar(request):
     return render(request, 'cadastro.html', {'flash_message': flash_message})
 
 
+def dashboard(request):
+    if not usuario_logado(request, 'confeiteiro'):
+        return redirect('/')
+    id_do_usuario = recuperar_elemento_da_session(request, 'id_do_usuario')
+    dados_para_template = {
+        'postagens': Postagem.objects.all(),
+        'dados_do_usuario': Confeiteiro.objects.get(id=id_do_usuario),
+    }
+    return render(request, 'profissional.html', dados_para_template)
+
+
+def nova_postagem(request):
+    if not usuario_logado(request, 'confeiteiro'):
+        return redirect('/')
+
+    if request.method == 'POST':
+        imagem = request.FILES['imagem']
+        titulo = request.POST.get('titulo')
+        descricao = request.POST.get('descricao')
+        preco = request.POST.get('preco')
+        tipo = request.POST.get('tipo')
+        user_id = recuperar_elemento_da_session(request, 'id_do_usuario')
+        # Salvar imagem no servidor
+        file_system = FileSystemStorage()
+        nome_do_arquivo_salvo = file_system.save(imagem.name, imagem)
+        # Salvar nome da imagem no banco de dados
+        confeiteiro = selecionar_confeiteiro_por_id(user_id)
+        postagem = Postagem(titulo=titulo, imagem=nome_do_arquivo_salvo, descricao=descricao, preco=preco, categoria=tipo, confeitero=confeiteiro)
+        postagem.save()
+
+    return redirect('/dashboard/')
+
+
+def cliente(request):
+    if not usuario_logado(request, 'cliente'):
+        return redirect('/')
+    id_do_usuario = recuperar_elemento_da_session(request, 'id_do_usuario')
+    dados_para_template = {
+        'postagens': ClientePublicacao.objects.all(),
+        'dados_do_usuario': Cliente.objects.get(id=id_do_usuario),
+    }
+    return render(request, 'cliente.html', dados_para_template)
+
+
+def nova_solicitacao(request):
+    if not usuario_logado(request, 'cliente'):
+        return redirect('/')
+
+    if request.method == 'POST':
+        imagem = request.FILES['imagem']
+        titulo = request.POST.get('titulo')
+        descricao = request.POST.get('descricao')
+        user_id = recuperar_elemento_da_session(request, 'id_do_usuario')
+        # Salvar imagem no servidor
+        file_system = FileSystemStorage()
+        nome_do_arquivo_salvo = file_system.save(imagem.name, imagem)
+        # Salvar nome da imagem no banco de dados
+        cliente = selecionar_cliente_por_id(user_id)
+        solicitacao = ClientePublicacao(titulo=titulo, descricao=descricao, imagem=nome_do_arquivo_salvo, finalizado=False, cliente=cliente)
+        solicitacao.save()
+
+    return redirect('/cliente/')
+
+
 '''
 Funções a partir desta parte são apenas operacionais, o controle das views fica acima
 '''
+
+
 # Funções para a gerencia de confeiteiros
 def seleciona_todos_os_confeiteiros_cadastrados():
     return Confeiteiro.objects.all()
@@ -68,7 +134,7 @@ def cadastrar_novo_confeiteiro(nome, email, login, senha, senha_repetida):
 
 
 def selecionar_confeiteiro_por_id(id):
-    return Confeiteiro.objects.all().filter(id=id)
+    return Confeiteiro.objects.get(id=id)
 
 
 def deletar_confeiteiro_por_id(pk):
@@ -87,6 +153,10 @@ def cadastrar_novo_cliente(nome, login, senha, senha_repetida):
             confeiteiro = Cliente(nome=nome, login=login, Senha=senha)
             confeiteiro.save()
     return True, 'Cadastrado com sucesso!'
+
+
+def selecionar_cliente_por_id(id):
+    return Cliente.objects.get(id=id)
 
 
 # funções para Controle de sessão
@@ -135,3 +205,12 @@ def deslogar(request):
     del request.session['nome_do_usuario']
     del request.session['tipo_de_usuario']
     return redirect('/')
+
+
+def usuario_logado(request, tipo_de_usuario):
+    if not recuperar_elemento_da_session(request, 'usuario_logado'):
+        return False
+    else:
+        if recuperar_elemento_da_session(request, 'tipo_de_usuario') != tipo_de_usuario:
+            return False
+    return True
