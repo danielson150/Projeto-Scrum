@@ -13,106 +13,143 @@
 </head>
 
 <body>
-    <!-- Menu de navegação -->
-    <nav class="navbar cor-padrao">
-        <a class="navbar-brand text-light">Bolos e Doces</a>
+<!-- Menu de navegação -->
+<!--<nav class="navbar cor-padrao">-->
+<!--<a class="navbar-brand text-light">Bolos e Doces</a>-->
+<!--<button class="btn btn-dark my-2 my-sm-0" type="submit" onclick="mostrarChat()">Chat</button>-->
+<!--<button class="btn btn-dark my-2 my-sm-0" href="{% url 'deslogar' %}">Sair</button>-->
+<!--</nav>-->
+
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand">Bolos e Doces</a>
+    <div class="buttons">
         <button class="btn btn-dark my-2 my-sm-0" type="submit" onclick="mostrarChat()">Chat</button>
-    </nav>
+        <a class="btn btn-dark my-2 my-sm-0" href="{% url 'deslogar' %}">Sair</a>
+    </div>
+</nav>
 
-    <div class="expand">
-        <div class="box-margin"></div>
+<div class="expand">
+    <div class="box-margin"></div>
 
-        <!-- Página do proficional -->
-        <div class="container">
-            <!-- tabs -->
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Serviços</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Meu cadastro</a>
-                </li>
+    <!-- Página do proficional -->
+    <div class="container">
+        <!-- tabs -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Serviços</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Meu cadastro</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="service-tab" data-toggle="tab" href="#servicos" role="tab" aria-controls="service" aria-selected="false">Serviços disponiveis</a>
+            </li>
 
-            </ul>
+        </ul>
 
-            <!-- Conteúdo da página -->
-            <div class="tab-content" id="myTabContent">
+        <!-- Conteúdo da página -->
+        <div class="tab-content" id="myTabContent">
 
-                <!-- Serviços -->
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <h1>Serviços</h1>
-                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#cadastrarServico">Inserir serviços</button>
-                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#avaliacoes">Avaliações</button>
+            <!-- Serviços -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <h1>Serviços</h1>
+                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#cadastrarServico">Inserir serviços</button>
+                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#avaliacoes">Avaliações</button>
 
-                    <div class="box-margin"></div>
+                <div class="box-margin"></div>
 
-                    <div id="listagem-de-serviços">
-                        {% if postagens %}
+                <div id="listagem-de-serviços">
+                    {% if postagens %}
 
-                        <div class="card-columns row">
-                            {% for post in postagens %}
-                            <div class="card col-sm-12 col-md-6 col-lg-4">
-                                <img class="card-img-top" src="/media/{{ post.imagem }}" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ post.titulo }}</h5>
-                                    <p class="card-text">{{ post.descricao }}</p>
-                                    <p class="card-text">Categoria: {{ post.categoria }}</p>
-                                    <p class="card-text">Preço: {{ post.preco }}</p>
-                                </div>
+                    <div class="card-columns row">
+                        {% for post in postagens %}
+                        <div class="card col-sm-12 col-md-6 col-lg-4">
+                            <img class="card-img-top" src="/media/{{ post.imagem }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.titulo }}</h5>
+                                <p class="card-text">{{ post.descricao }}</p>
+                                <p class="card-text">Categoria: {{ post.categoria }}</p>
+                                <p class="card-text">Preço: {{ post.preco }}</p>
                             </div>
-                            {% endfor %}
                         </div>
-                        {% else %}
-                        <div id="servico-vazio">
-                            <img src="https://img.icons8.com/cotton/1600/double-chocolate-cake.png" alt="bolo">
-                            <p>Você não possui serviços publicados no momento.</p>
-                            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#cadastrarServico">Publicar</button>
-                        </div>
-                        {% endif %}
-
-
+                        {% endfor %}
                     </div>
-                </div>
-
-                <!-- Cadastro do confeiteiro -->
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <!-- Container para listagem dos dados -->
-                    <div class="container container-cadastro">
-                        <h1>
-                            <i class="material-icons">person</i>
-                            Atualizar informações
-                        </h1>
-
-                        <form method="post" enctype="multipart/form-data" action="/dashboard/postar/">
-                            {% csrf_token %}
-                            <div>
-                                <label for="imagem">Imagem</label>
-                                <input type="file" id="imagem" name="imagem">
-                            </div>
-                            <div class="form-group">
-                                <label for="titulo" class="col-form-label">Titulo:</label>
-                                <input type="text" class="form-control" id="titulo" name="titulo">
-                            </div>
-                            <div class="form-group">
-                                <label for="descricao" class="col-form-label">Descrição:</label>
-                                <textarea class="form-control" id="descricao" name="descricao"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="preco" class="col-form-label">Preço:</label>
-                                <input type="number" min="0" step="0.5" class="form-control" id="preco" name="preco">
-                            </div>
-                            <div class="form-group">
-                                <select name="tipo" id="tipo">
-                                    <option value="casamento">Casamento</option>
-                                    <option value="comum">Fechar</option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Publicar</button>
-                        </form>
+                    {% else %}
+                    <div id="servico-vazio">
+                        <img src="https://img.icons8.com/cotton/1600/double-chocolate-cake.png" alt="bolo">
+                        <p>Você não possui serviços publicados no momento.</p>
+                        <button class="btn btn-success" type="button" data-toggle="modal" data-target="#cadastrarServico">Publicar</button>
                     </div>
+                    {% endif %}
+
+
                 </div>
             </div>
+
+            <!-- Cadastro do confeiteiro -->
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <!-- Container para listagem dos dados -->
+                <div class="container container-cadastro">
+                    <h1>
+                        <i class="material-icons">person</i>
+                        Atualizar informações
+                    </h1>
+
+                    <form method="post" enctype="multipart/form-data" action="/dashboard/postar/">
+                        {% csrf_token %}
+                        <div>
+                            <label for="imagem">Imagem</label>
+                            <input type="file" id="imagem" name="imagem">
+                        </div>
+                        <div class="form-group">
+                            <label for="titulo" class="col-form-label">Titulo:</label>
+                            <input type="text" class="form-control" id="titulo" name="titulo">
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao" class="col-form-label">Descrição:</label>
+                            <textarea class="form-control" id="descricao" name="descricao"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="preco" class="col-form-label">Preço:</label>
+                            <input type="number" min="0" step="0.5" class="form-control" id="preco" name="preco">
+                        </div>
+                        <div class="form-group">
+                            <select name="tipo" id="tipo">
+                                <option value="casamento">Casamento</option>
+                                <option value="comum">Fechar</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Publicar</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Serviços disponiveis-->
+            <div class="tab-pane fade" id="servicos" role="tabpanel" aria-labelledby="service-tab">
+                <div class="box-margin"></div>
+                <div class="expand">
+                    <div class="card-columns">
+                        {% if solicitacoes %}
+                        {% for solicitacao in solicitacoes %}
+                        <!-- Card -->
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="/media/{{ solicitacao.imagem }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{solicitacao.cliente.nome}}</h5>
+                                <p class="card-text">{{ solicitacao.descricao }}</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <h3>Nenhuma solicitacao cadastrada no momento</h3>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+
             <div class="box-margin"></div>
         </div>
     </div>

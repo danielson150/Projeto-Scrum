@@ -17,9 +17,10 @@ def home(request):
                 return redirect('/cliente')
 
     dicionario = {
-        'confeiteiros': seleciona_todos_os_confeiteiros_cadastrados(),
+        'confeiteiros': Confeiteiro.objects.exclude(foto_perfil='').exclude(descricao=''),
+        'solicitacoes': ClientePublicacao.objects.exclude(titulo='').exclude(descricao='').exclude(imagem='').filter(finalizado=False),
         'usuario_logado': recuperar_elemento_da_session(request, 'usuario_logado'),
-        'nome_do_usuario': recuperar_elemento_da_session(request, 'nome_do_usuario')
+        'tipo_de_usuario': recuperar_elemento_da_session(request, 'tipo_de_usuario')
     }
     return render(request, 'index.html', dicionario)
 
@@ -37,11 +38,15 @@ def cadastrar(request):
 
         if tipo_de_usuario == 'confeiteiro':
             resposta_do_cadastro = cadastrar_novo_confeiteiro(nome, email, login, senha, repete_senha)
-            if not resposta_do_cadastro[0]:
+            if resposta_do_cadastro[0] == True:
+                return redirect('/')
+            else:
                 flash_message = resposta_do_cadastro[1]
         else:
             resposta_do_cadastro = cadastrar_novo_cliente(nome, login, senha, repete_senha)
-            if not resposta_do_cadastro[0]:
+            if resposta_do_cadastro[0] == True:
+                return redirect('/')
+            else:
                 flash_message = resposta_do_cadastro[1]
 
     return render(request, 'cadastro.html', {'flash_message': flash_message})
@@ -50,10 +55,12 @@ def cadastrar(request):
 def dashboard(request):
     if not usuario_logado(request, 'confeiteiro'):
         return redirect('/')
+
     id_do_usuario = recuperar_elemento_da_session(request, 'id_do_usuario')
     dados_para_template = {
         'postagens': Postagem.objects.all(),
         'dados_do_usuario': Confeiteiro.objects.get(id=id_do_usuario),
+        'solicitacoes': ClientePublicacao.objects.exclude(titulo='').exclude(descricao='').exclude(imagem='').filter(finalizado=False),
     }
     return render(request, 'profissional.html', dados_para_template)
 

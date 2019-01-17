@@ -9,6 +9,9 @@
 .hiden {
     display: none;
 }
+.buttons {
+    margin-left: 25px;
+}
 
 /* Cards */
 #avaliacoes .modal-body {

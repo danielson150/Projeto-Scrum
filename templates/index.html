@@ -23,14 +23,17 @@
                 </a>
 
                 {% if usuario_logado == True %}
-                <!-- botão para deslogar-->
-                <a class="right ml-1" href="{% url 'deslogar' %}">
-                    Sair<i class="material-icons right">exit_to_app</i>
-                </a>
                 <!-- botão para o perfil -->
-                <a class="right" href="{% url 'dashboard' %}">
-                    cadastrar<i class="material-icons right">person</i>
-                </a>
+                    {% if tipo_de_usuario == "cliente" %}
+                    <a class="right" href="{% url 'cliente' %}">
+                        Perfil<i class="material-icons right">person</i>
+                    </a>
+                    {% else %}
+                        <a class="right" href="{% url 'dashboard' %}">
+                            Perfil<i class="material-icons right">person</i>
+                        </a>
+
+                    {% endif %}
                 {% else %}
                 <!-- botão para login -->
                 <a class="right" href="{% url 'cadastrar' %}">
@@ -190,100 +193,60 @@
 
     <!-- Página Confeiteiros -->
     <div id="teste2" class="col s12">
-        <div class="listagem container">
-            <h3>Confeiteiros cadastrados</h3>
+        <div class="listagem container expand">
 
-            {% for confeiteiro in confeiteiros %}
-            <!-- Card -->
-            <div class="row">
-                <div class="col s12 m8 offset-m2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="media/{{ confeiteiro.foto_perfil }}">
-                            <span class="card-title">{{ confeiteiro.nome }}</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                            <p>{{ confeiteiro.descricao }}</p>
-                        </div>
-                        <div class="card-action">
-                            <a href="#">Acessar perfil</a>
+            {% if confeiteiros %}
+                {% for confeiteiro in confeiteiros %}
+                <!-- Card -->
+                <div class="row">
+                    <div class="col s12 m8 offset-m2">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="media/{{ confeiteiro.foto_perfil }}">
+                                <span class="card-title">{{ confeiteiro.nome }}</span>
+                                <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                            </div>
+                            <div class="card-content">
+                                <p>{{ confeiteiro.descricao }}</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="#">Acessar perfil</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                <h3>Nenhum confeiteiro cadastrado</h3>
+            {% endif %}
 
         </div>
     </div> <!-- Página dos confeiteiros -->
 
     <!-- Página Solicitações por parte dos clientes -->
     <div id="teste3" class="col s12">
-        <div class="listagem container">
-            <h3>Solicitações dos clientes</h3>
-            <!-- Card -->
-            <div class="row">
-                <div class="col s12 m8 offset-m2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="img/beatycake.jpeg">
-                            <span class="card-title">Nome do confeiteiro</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                            <p>Descrição do confeiteiro, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci velit earum debitis excepturi ducimus, illum, atque impedit vero quas, fugit reprehenderit. Earum ex porro architecto cumque tenetur expedita eligendi a!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card -->
-            <div class="row">
-                <div class="col s12 m8 offset-m2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="img/beatycake.jpeg">
-                            <span class="card-title">Nome do confeiteiro</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                            <p>Descrição do confeiteiro, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci velit earum debitis excepturi ducimus, illum, atque impedit vero quas, fugit reprehenderit. Earum ex porro architecto cumque tenetur expedita eligendi a!</p>
+        <div class="listagem container expand">
+            {% if solicitacoes %}
+                {% for solicitacao in solicitacoes %}
+                <!-- Card -->
+                <div class="row">
+                    <div class="col s12 m8 offset-m2">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="media/{{ solicitacao.imagem }}">
+                                <span class="card-title">{{solicitacao.cliente.nome}}</span>
+                                <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+                            </div>
+                            <div class="card-content">
+                                <p>{{ solicitacao.descricao }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Card -->
-            <div class="row">
-                <div class="col s12 m8 offset-m2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="img/beatycake.jpeg">
-                            <span class="card-title">Nome do confeiteiro</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                            <p>Descrição do confeiteiro, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci velit earum debitis excepturi ducimus, illum, atque impedit vero quas, fugit reprehenderit. Earum ex porro architecto cumque tenetur expedita eligendi a!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card -->
-            <div class="row">
-                <div class="col s12 m8 offset-m2">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="img/beatycake.jpeg">
-                            <span class="card-title">Nome do confeiteiro</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                            <p>Descrição do confeiteiro, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci velit earum debitis excepturi ducimus, illum, atque impedit vero quas, fugit reprehenderit. Earum ex porro architecto cumque tenetur expedita eligendi a!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                {% endfor %}
+            {% else %}
+                <h3>Nenhuma solicitacao cadastrada no momento</h3>
+            {% endif %}
         </div>
     </div> <!-- Solicitações pendentes -->
 
