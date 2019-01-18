@@ -59,6 +59,7 @@ def dashboard(request):
     id_do_usuario = recuperar_elemento_da_session(request, 'id_do_usuario')
     dados_para_template = {
         'postagens': Postagem.objects.all(),
+        'contatos': ContatoConfeiteiro.objects.all(),
         'dados_do_usuario': Confeiteiro.objects.get(id=id_do_usuario),
         'solicitacoes': ClientePublicacao.objects.exclude(titulo='').exclude(descricao='').exclude(imagem='').filter(finalizado=False),
     }
@@ -87,6 +88,28 @@ def nova_postagem(request):
     return redirect('/dashboard/')
 
 
+def novo_contato_do_confeiteiro(request):
+    if not usuario_logado(request, 'confeiteiro'):
+        return redirect('/')
+
+    if request.method == 'POST':
+        numero = request.POST.get('numero')
+        eh_whatsapp = request.POST.get('whatsapp')
+        user_id = recuperar_elemento_da_session(request, 'id_do_usuario')
+
+        if eh_whatsapp == None:
+            eh_whatsapp = False
+        else:
+            eh_whatsapp = True
+
+        # Salvar nome da imagem no banco de dados
+        confeiteiro = selecionar_confeiteiro_por_id(user_id)
+        contato = ContatoConfeiteiro(numero=numero, whatsapp=eh_whatsapp, confeitero=confeiteiro)
+        contato.save()
+
+    return redirect('/dashboard/')
+
+
 def cliente(request):
     if not usuario_logado(request, 'cliente'):
         return redirect('/')
@@ -94,6 +117,7 @@ def cliente(request):
     dados_para_template = {
         'postagens': ClientePublicacao.objects.all(),
         'dados_do_usuario': Cliente.objects.get(id=id_do_usuario),
+        'contatos': ContatoCliente.objects.all(),
     }
     return render(request, 'cliente.html', dados_para_template)
 
@@ -114,6 +138,28 @@ def nova_solicitacao(request):
         cliente = selecionar_cliente_por_id(user_id)
         solicitacao = ClientePublicacao(titulo=titulo, descricao=descricao, imagem=nome_do_arquivo_salvo, finalizado=False, cliente=cliente)
         solicitacao.save()
+
+    return redirect('/cliente/')
+
+
+def novo_contato_do_cliente(request):
+    if not usuario_logado(request, 'cliente'):
+        return redirect('/')
+
+    if request.method == 'POST':
+        numero = request.POST.get('numero')
+        eh_whatsapp = request.POST.get('whatsapp')
+        user_id = recuperar_elemento_da_session(request, 'id_do_usuario')
+
+        if eh_whatsapp == None:
+            eh_whatsapp = False
+        else:
+            eh_whatsapp = True
+
+        # Salvar nome da imagem no banco de dados
+        cliente = selecionar_cliente_por_id(user_id)
+        contato = ContatoCliente(numero=numero, whatsapp=eh_whatsapp, cliente=cliente)
+        contato.save()
 
     return redirect('/cliente/')
 

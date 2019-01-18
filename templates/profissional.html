@@ -14,13 +14,7 @@
 
 <body>
 <!-- Menu de navegação -->
-<!--<nav class="navbar cor-padrao">-->
-<!--<a class="navbar-brand text-light">Bolos e Doces</a>-->
-<!--<button class="btn btn-dark my-2 my-sm-0" type="submit" onclick="mostrarChat()">Chat</button>-->
-<!--<button class="btn btn-dark my-2 my-sm-0" href="{% url 'deslogar' %}">Sair</button>-->
-<!--</nav>-->
-
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar text-white cor-padrao">
     <a class="navbar-brand">Bolos e Doces</a>
     <div class="buttons">
         <button class="btn btn-dark my-2 my-sm-0" type="submit" onclick="mostrarChat()">Chat</button>
@@ -44,7 +38,9 @@
             <li class="nav-item">
                 <a class="nav-link" id="service-tab" data-toggle="tab" href="#servicos" role="tab" aria-controls="service" aria-selected="false">Serviços disponiveis</a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" id="cad-number-tab" data-toggle="tab" href="#number" role="tab" aria-controls="number" aria-selected="false">Cadastrar contato</a>
+            </li>
         </ul>
 
         <!-- Conteúdo da página -->
@@ -147,6 +143,67 @@
                         {% endif %}
                     </div>
 
+                </div>
+            </div>
+
+            <!-- Cadastrar novo contato -->
+            <div class="tab-pane fade" id="number" role="tabpanel" aria-labelledby="cad-number-tab">
+                <div class="expand">
+                    <div class="container container-cadastro">
+                        <h1>
+                            <i class="material-icons">call</i>
+                            Adicionar novos contatos
+                        </h1>
+
+                        <form method="post" enctype="multipart/form-data" action="/dashboard/novocontato/">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="numero" class="col-form-label">Numero:</label>
+                                <input type="text" class="form-control" id="numero" name="numero">
+                            </div>
+                            <div class="form-group">
+                                <label for="whatsapp" class="col-form-label">Whatsapp:</label>
+                                <input type="checkbox" id="whatsapp" name="whatsapp">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        </form>
+                    </div>
+
+                    <div class="contatos-salvos">
+                        <h3>Contatos salvos</h3>
+                        {% if contatos %}
+                        <div class="card-columns">
+                            {% for contato in contatos %}
+                            {% if contato.whatsapp == True %}
+                            <!-- Card -->
+                            <div class="card border-success mb-3" style="max-width: 18rem;">
+                                <div class="card-header bg-dark text-white">Contato</div>
+                                <div class="card-body text-white bg-success">
+                                    <p class="card-text">{{ contato.numero }}.</p>
+                                </div>
+                                <div class="card-footer text-white bg-dark">
+                                    <ion-icon name="logo-whatsapp"></ion-icon> Whatsapp</div>
+                            </div>
+
+                            {% else %}
+
+                            <!-- Card -->
+                            <div class="card border-success mb-3" style="max-width: 18rem;">
+                                <div class="card-header bg-dark text-white">Contato</div>
+                                <div class="card-body text-white bg-info">
+                                    <p class="card-text">{{ contato.numero }}</p>
+                                </div>
+                                <div class="card-footer bg-dark text-white">Whatsapp não disponível</div>
+                            </div>
+
+
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p>Nenhum contato cadastrado, cadastre para que confeiteiros possam entrar em coontato com você.</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
 
@@ -272,6 +329,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <!-- Rodapé -->
     <footer class="page-footer bg-dark">
@@ -294,6 +352,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/ionicons@4.5.1/dist/ionicons.js"></script>
     <script src="{% static 'js/script.js' %}"></script>
 </body>
 

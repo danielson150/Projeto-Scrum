@@ -13,8 +13,10 @@ urlpatterns = [
     path('deslogar/', views.deslogar, name='deslogar'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/postar/', views.nova_postagem, name='novo_servico'),
+    path('dashboard/novocontato/', views.novo_contato_do_confeiteiro, name='novo_contato_confeiteiro'),
     path('cliente/', views.cliente, name='cliente'),
     path('cliente/postar/', views.nova_solicitacao, name='nova_solicitacao'),
+    path('cliente/novocontato/', views.novo_contato_do_cliente, name='novo_contato_cliente'),
 ]
 
 
