@@ -18,7 +18,7 @@
         <div class="nav-wrapper">
             <div class="container">
                 <!-- logo do site -->
-                <a href="#" class="brand-logo left ">
+                <a href="{% url 'dashboard' %}" class="brand-logo left ">
                     <img src="{% static 'img/guest.png' %}" alt="logo do site" class="logo">
                 </a>
 
@@ -97,15 +97,10 @@
         <!-- Sobre -->
         <div class="divider"></div>
         <div class="container center-align">
-            <h3>Titulo</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis consectetur earum quis dolor ea, ut
-                aliquam nostrum accusamus illum! Quasi, laboriosam consequuntur excepturi libero impedit eius inventore
-                aperiam aliquam quo!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto suscipit esse necessitatibus saepe,
-                rerum explicabo nostrum nemo eligendi perspiciatis fugiat minima, dolorem fugit est praesentium. Soluta
-                sit suscipit facere cum.
+            <h3>Conectando você com confeiteiros de todo o Brasil</h3>
+            <p>A Bolos e Doces entende que preservar a tradição de nossa cultura ao celebrar sempre nossas conquistas, aniversários, momentos felizes que serão armazenados em nossa memória é tão fundamental quanto valorizar as relações humanas que se iniciam na encomenda de bolos e vão se materializando em todas as etapas do pedido, produção e entrega, quando finalmente cada pedido é finalizado.
             </p>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates ipsam ea eaque quo esse incidunt rerum repellendus illum voluptas accusantium dolorum dolorem dicta ratione, eligendi eius distinctio soluta expedita sunt?</p>
+            <p>A encomenda de bolos na Bolos e Doces vão muito além de um simples click, pois sabemos da nossa responsbilidade no sucesso de cada comemoração. As encomendas de bolo aqui são assim, só experimentando mesmo!</p>
         </div>
 
 
@@ -115,29 +110,29 @@
                 <li>
                     <img src="{% static 'img/beatycake.jpeg' %}"> <!-- random image -->
                     <div class="caption center-align">
-                        <h3>This is our big Tagline!</h3>
-                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                        <h3>Viva o presente, porque gostoso mesmo é sempre ter o que comemorar….</h3>
+                        <h5 class="light grey-text text-lighten-3">Viva intesamente</h5>
                     </div>
                 </li>
                 <li>
                     <img src="{% static 'img/chococake.jpeg' %}"> <!-- random image -->
                     <div class="caption left-align">
-                        <h3>Left Aligned Caption</h3>
-                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                        <h3>Bolos e Doces feitos com carinho</h3>
+                        <h5 class="light grey-text text-lighten-3"></h5>
                     </div>
                 </li>
                 <li>
                     <img src="{% static 'img/manycake.jpeg' %}"> <!-- random image -->
                     <div class="caption right-align">
-                        <h3>Right Aligned Caption</h3>
-                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                        <h3>Queremos mais sabor, mais satisfação, queremos mais amor!</h3>
+                        <h5 class="light grey-text text-lighten-3">E uma vida que nos dê mais água na boca.</h5>
                     </div>
                 </li>
                 <li>
                     <img src="{% static 'img/marriecake.jpeg' %}"> <!-- random image -->
                     <div class="caption center-align">
-                        <h3>This is our big Tagline!</h3>
-                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                        <h3>Um batalhão de confeiteiros.</h3>
+                        <h5 class="light grey-text text-lighten-3">Acreditamos na força das pausas e não nos envergonhamos de cair em tentação.</h5>
                     </div>
                 </li>
             </ul>
@@ -162,7 +157,7 @@
                         <div class="card-content">
                             <span class="card-title">Mais economia</span>
                             <div class="divider box-margin"></div>
-                            <p>Econimize dinheiro buscando o melhor confeiteiro entre os cadastrados, para fazer o
+                            <p>Economize dinheiro buscando o melhor confeiteiro entre os cadastrados, para fazer o
                                 que você deseja.</p>
                         </div>
                     </div>
@@ -181,13 +176,15 @@
                 </div>
 
             </div>
-        </div>
+        </div>  
 
         <div class="container center">
             <h3>Cadastre-se</h3>
-            <button class="btn green">Cadastrar-se</button>
-            <div class="box-margin"></div>
+            <a class="btn green" href="{% url 'cadastrar' %}">Cadastrar-se</a> 
         </div>
+
+ 
+      
 
     </div> <!-- Pequena apresentação -->
 
@@ -272,7 +269,7 @@
         </div>
         <div class="footer-copyright">
             <div class="container">
-                © 2014 Copyright Text
+                © 2018 Copyright Text
                 <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
             </div>
         </div>
