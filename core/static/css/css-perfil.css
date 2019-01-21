@@ -58,6 +58,36 @@
     padding: 2px;
 }
 
+/* Visualizaçõao do perfil do confeiteiro */
+.capa {
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 100px 0;
+    text-align: center;
+    color: #fff;
+}
+.capa h1 {
+    text-shadow: 10px 10px 20px #000;
+}
+.circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.img-perfil {
+    margin-top: -75px;
+    margin-left: calc(50% - 75px);
+}
+.informacoes {
+    min-height: calc(75px + 25px);
+}
+.informacoes h3 {
+    margin: 10px;
+    text-align: center;
+}
+
 @media only screen and (min-width: 600px) {
 
     /* imagem do centro da página */
@@ -81,6 +111,18 @@
     .chat-msg p {
         border: 1px solid #ddd;
         padding: 2px;
+    }
+
+    .img-perfil {
+        margin-top: -75px;
+        margin-left: 15px;
+        margin-right: 15px;
+        float: left;
+    }
+
+    .informacoes h3 {
+        margin: 10px;
+        text-align: left;
     }
 
 }

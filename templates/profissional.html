@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link type="text/css" rel="stylesheet" href="{% static 'css/estilo.css' %}" />
     <link type="text/css" rel="stylesheet" href="{% static 'css/css-perfil.css' %}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
     <title>Dashboard</title>
 </head>
 
@@ -91,29 +92,49 @@
                         Atualizar informações
                     </h1>
 
-                    <form method="post" enctype="multipart/form-data" action="/dashboard/postar/">
+
+                    <!--
+                    foto_perfil
+                    foto_capa
+                    descricao
+                    -->
+                    <form method="post" enctype="multipart/form-data" action="/dashboard/atualizar/">
                         {% csrf_token %}
+                        <div class="form-group">
+                            <label for="nome" class="col-form-label">Nome:</label>
+                            <input type="text" class="form-control" id="nome" name="nome" value="{{ dados_do_usuario.nome }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="login" class="col-form-label">Login:</label>
+                            <input type="text" class="form-control" id="login" name="login" value="{{ dados_do_usuario.login }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-form-label">Email:</label>
+                            <input type="text" class="form-control" id="email" name="email" value="{{ dados_do_usuario.email }}">
+                        </div>
                         <div>
-                            <label for="imagem">Imagem</label>
-                            <input type="file" id="imagem" name="imagem">
+                            <label for="fotoPerfil">Foto do perfil *Importante</label>
+                            <input type="file" id="fotoPerfil" name="fotoPerfil" value="{{ dados_do_usuario.foto_perfil }}">
+                        </div>
+                        <div>
+                            <label for="fotoCapa">Foto da capa *Importante</label>
+                            <input type="file" id="fotoCapa" name="fotoCapa" value="{{ dados_do_usuario.foto_capa }}">
                         </div>
                         <div class="form-group">
-                            <label for="titulo" class="col-form-label">Titulo:</label>
-                            <input type="text" class="form-control" id="titulo" name="titulo">
+                            <label for="descricaoConfeiteiro" class="col-form-label">Descrição:</label>
+                            <textarea class="form-control" id="descricaoConfeiteiro" name="descricaoConfeiteiro" value="{{ dados_do_usuario.descricao }}"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="descricao" class="col-form-label">Descrição:</label>
-                            <textarea class="form-control" id="descricao" name="descricao"></textarea>
+                            <label for="estado" class="col-form-label">Estado:</label>
+                            <input type="text" class="form-control" id="estado" name="estado" value="{{ dados_do_usuario.estado }}">
                         </div>
                         <div class="form-group">
-                            <label for="preco" class="col-form-label">Preço:</label>
-                            <input type="number" min="0" step="0.5" class="form-control" id="preco" name="preco">
+                            <label for="cidade" class="col-form-label">Cidade:</label>
+                            <input type="text" class="form-control" id="cidade" name="cidade" value="{{ dados_do_usuario.cidade }}">
                         </div>
                         <div class="form-group">
-                            <select name="tipo" id="tipo">
-                                <option value="casamento">Casamento</option>
-                                <option value="comum">Fechar</option>
-                            </select>
+                            <label for="logradouro" class="col-form-label">Logradouro:</label>
+                            <input type="text" class="form-control" id="logradouro" name="logradouro" value="{{ dados_do_usuario.endereco }}">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Publicar</button>
@@ -243,8 +264,12 @@
                         </div>
                         <div class="form-group">
                             <select name="tipo" id="tipo">
-                                <option value="casamento">Casamento</option>
-                                <option value="comum">Fechar</option>
+                                <option value="casamento">Cupcake</option>
+                                <option value="comum">Aniversário</option>
+                                <option value="comum">Casamento</option>
+                                <option value="comum">Bolo no pote</option>
+                                <option value="comum">Doces</option>
+                                <option value="comum">Brownie</option>
                             </select>
                         </div>
 

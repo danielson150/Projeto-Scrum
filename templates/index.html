@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection" />
     <link type="text/css" rel="stylesheet" href="{% static 'css/estilo.css' %}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
     <title>Home</title>
 </head>
 
@@ -32,12 +33,14 @@
                         <a class="right" href="{% url 'dashboard' %}">
                             Perfil<i class="material-icons right">person</i>
                         </a>
-
                     {% endif %}
                 {% else %}
                 <!-- botão para login -->
                 <a class="right" href="{% url 'cadastrar' %}">
-                    cadastrar<i class="material-icons right">person</i>
+                    cadastrar<i class="material-icons right">person_add</i>
+                </a>
+                <a class="right" href="{% url 'login' %}">
+                    Login<i class="material-icons right">person</i>
                 </a>
                 {% endif %}
             </div>
@@ -59,14 +62,14 @@
         <!-- Parallax inicial -->
         <div class="parallax-container">
             <!-- Imagem para o parallax -->
-            <div class="parallax"><img src="{% static 'img/cupcake.jpeg' %}"></div>
+            <div class="parallax"><img src="{% static 'img/cupbolo.jpeg' %}"></div>
 
             <!-- Caixa auxiliar ao parallax -->
             <div class="row blur-black">
                 <div class="container">
                     <!-- Boas vindas -->
                     <div class="col s12 m6 full-height valign-wrapper center-align">
-                        <h3 class="orange-text text-lighten-1">Aqui você encontra Bolos para diversas ocasiões!</h3>
+                        <h3 class="orange-text text-lighten-1">Seja Bem Vindo. Aqui você encontra Bolos e Doces para diversas ocasiões!</h3>
                     </div>
 
                     <!-- Login -->
@@ -98,9 +101,14 @@
         <div class="divider"></div>
         <div class="container center-align">
             <h3>Conectando você com confeiteiros de todo o Brasil</h3>
-            <p>A Bolos e Doces entende que preservar a tradição de nossa cultura ao celebrar sempre nossas conquistas, aniversários, momentos felizes que serão armazenados em nossa memória é tão fundamental quanto valorizar as relações humanas que se iniciam na encomenda de bolos e vão se materializando em todas as etapas do pedido, produção e entrega, quando finalmente cada pedido é finalizado.
+            <p>A Bolos e Doces entende que preservar a tradição de nossa cultura ao celebrar sempre nossas conquistas,
+                aniversários, momentos felizes que serão armazenados em nossa memória é tão fundamental quanto
+                valorizar as relações humanas que se iniciam na encomenda de bolos e vão se materializando em todas as
+                etapas do pedido, produção e entrega, quando finalmente cada pedido é finalizado.
             </p>
-            <p>A encomenda de bolos na Bolos e Doces vão muito além de um simples click, pois sabemos da nossa responsbilidade no sucesso de cada comemoração. As encomendas de bolo aqui são assim, só experimentando mesmo!</p>
+            <p>A encomenda de bolos na Bolos e Doces vão muito além de um simples click, pois sabemos da nossa
+                responsbilidade no sucesso de cada comemoração. As encomendas de bolo aqui são assim, só experimentando
+                mesmo!</p>
         </div>
 
 
@@ -176,15 +184,13 @@
                 </div>
 
             </div>
-        </div>  
+        </div>
 
         <div class="container center">
             <h3>Cadastre-se</h3>
-            <a class="btn green" href="{% url 'cadastrar' %}">Cadastrar-se</a> 
+            <a class="btn green" href="{% url 'cadastrar' %}">Cadastrar-se</a>
         </div>
-
- 
-      
+        <div class="box-margin"></div>
 
     </div> <!-- Pequena apresentação -->
 
@@ -251,19 +257,10 @@
     <footer class="page-footer blue-grey darken-4">
         <div class="container">
             <div class="row">
-                <div class="col l6 s12">
+                <div class="col l6 s12 offset-l3">
                     <h5 class="white-text">Confeiteiros online</h5>
                     <p class="grey-text text-lighten-4">Cadastra-se e tenha acesso a todas as funcionalidades do
                         site.</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Links</h5>
-                    <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                    </ul>
                 </div>
             </div>
         </div>

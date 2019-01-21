@@ -5,6 +5,9 @@
 .cor-padrao {
     background-color: #ff890a;
 }
+.cor-alternativa {
+    background-color: #263238;
+}
 .page-footer {
     padding: 5px;
     color: #fff;
@@ -113,4 +116,19 @@ select {
     display: block;
     width: 84%;
     float: right;
+}
+
+.tela-de-login {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.tela-de-login form {
+    padding: 25px;
+    border-radius: 25px;
+    border: 1px solid #aaa;
+    box-shadow: 0 10px 50px #444;
 }

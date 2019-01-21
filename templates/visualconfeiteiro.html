@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/estilo.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'css/css-perfil.css' %}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <!-- Menu de navegação -->
+    <nav class="navbar cor-padrao">
+        <a href="{% url 'home' %}" class="brand-logo left ">
+        <img src="{% static 'img/guest.png' %}" alt="logo do site" class="logo"></a>
+        <button class="btn btn-dark my-2 my-sm-0" type="submit" onclick="mostrarChat()">Contato</button>
+    </nav>
+
+    <div class="expand">
+        <div class="capa">
+            <h1>Confeiteiro</h1>
+        </div>
+
+        <div class="informacoes container">
+            <img src="img/confeiteiro.jpg" class="circle img-perfil">
+            <h3>{{ confeiteiro.nome }}</h3>
+            <p>Descrição: {{ confeiteiro.descricao }}</p>
+        </div>
+
+        <div class="servicos container">
+            <h3>Serviços</h3>
+            <!-- Card -->
+            <div class="card-columns row">
+                <div class="card col-sm-12 col-md-6 col-lg-4">
+                    <img class="card-img-top" src="img/cupcake.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title that wraps to a new line</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error vero, cum
+                            impedit cumque harum! Minima suscipit odio a expedita ducimus repudiandae, qui illum sed
+                            nobis deserunt officiis, nemo sapiente consectetur. Lorem ipsum dolor sit amet, consectetur
+                            adipisicing elit. Excepturi qui delectus, ducimus totam maxime quasi eos, commodi magni,
+                            dolorum molestias deleniti labore atque tenetur eligendi architecto optio, quo itaque
+                            laboriosam..</p>
+                    </div>
+                </div>
+
+                <div class="card col-sm-12 col-md-6 col-lg-4">
+                    <img class="card-img-top" src="img/cupcake.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title that wraps to a new line</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+
+                <div class="card col-sm-12 col-md-6 col-lg-4">
+                    <img class="card-img-top" src="img/cupcake.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title that wraps to a new line</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+
+                <div class="card col-sm-12 col-md-6 col-lg-4">
+                    <img class="card-img-top" src="img/cupcake.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title that wraps to a new line</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                            additional content. This content is a little bit longer.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Modal de cadastro de serviços -->
+    <div class="modal fade" id="cadastrarServico" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cadastrar serviço</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div>
+                            <label for="">Imagem</label>
+                            <input type="file">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Titulo:</label>
+                            <input type="text" class="form-control" id="titulo">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Descrição:</label>
+                            <textarea class="form-control" id="descricao"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Preço:</label>
+                            <input type="number" min="0" step="0.5" class="form-control" id="preco">
+                        </div>
+                        <div class="form-group">
+                            <select name="" id="">
+                                <option value="casamento">Casamento</option>
+                                <option value="comum">Fechar</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Publicar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para a listagem de avaliações -->
+    <div class="modal fade" id="avaliacoes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Avaliações</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-dark">
+                    <!-- Cards de avaliações -->
+                    <div class="card card-avaliacao">
+                        <div class="card-header">
+                            Nome do Cliente
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Titulo da descrição</h5>
+                            <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros
+                                cadastrados.</p>
+                            <a href="#" class="btn btn-outline-info">Nota 10.0</a>
+                        </div>
+                    </div>
+
+                    <!-- Cards de avaliações -->
+                    <div class="card card-avaliacao">
+                        <div class="card-header">
+                            Nome do Cliente
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Titulo da descrição</h5>
+                            <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros
+                                cadastrados.</p>
+                            <a href="#" class="btn btn-outline-info">Nota 10.0</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Area para p bate papo -->
+    <div class="bate-papo">
+        <div class="card card-avaliacao">
+            <div class="card-header">
+                <p>Contato</p>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="mostrarChat()">Fechar</button>
+            </div>
+            <div class="card-body">
+                <div class="chat-msg">
+                    <h5 class="card-title">Celular</h5>
+                    <p class="card-text">8691234-5678</p>
+                </div>
+                <div class="chat-msg">
+                    <h5 class="card-title">Whatsapp</h5>
+                    <p class="card-text">8691234-5678</p>
+                </div>
+                <div class="chat-msg">
+                    <h5 class="card-title">Titulo da descrição</h5>
+                    <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros cadastrados.</p>
+                </div>
+                <div class="chat-msg">
+                    <h5 class="card-title">Titulo da descrição</h5>
+                    <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros cadastrados.</p>
+                </div>
+                <div class="chat-msg">
+                    <h5 class="card-title">Titulo da descrição</h5>
+                    <p class="card-text">Descrição que será escrita pelos clientes para os confeiteiros cadastrados.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="page-footer bg-dark">
+        <div class="box-margin"></div>
+        <div class="container">
+            <div>
+                <h5 class="white-text">Confeiteiros online</h5>
+                <p class="grey-text text-lighten-4">Cadastra-se e tenha acesso a todas as funcionalidades do
+                    site.</p>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2014 Copyright - Todos os direitos reservados
+            </div>
+        </div>
+    </footer>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from core.forms import *
 from core.models import *
 from django.core.files.storage import FileSystemStorage
 
@@ -23,6 +22,18 @@ def home(request):
         'tipo_de_usuario': recuperar_elemento_da_session(request, 'tipo_de_usuario')
     }
     return render(request, 'index.html', dicionario)
+
+
+def login(request):
+    if request.method == 'POST':
+        login = request.POST.get('login')
+        senha = request.POST.get('senha')
+        if logar(request, login, senha):
+            if recuperar_elemento_da_session(request, 'tipo_de_usuario') == 'confeiteiro':
+                return redirect('/dashboard')
+            else:
+                return redirect('/cliente')
+    return render(request, 'login.html')
 
 
 def cadastrar(request):
@@ -64,6 +75,44 @@ def dashboard(request):
         'solicitacoes': ClientePublicacao.objects.exclude(titulo='').exclude(descricao='').exclude(imagem='').filter(finalizado=False),
     }
     return render(request, 'profissional.html', dados_para_template)
+
+
+def atualizar_dados_do_confeiteiro(request):
+    if not usuario_logado(request, 'confeiteiro'):
+        return redirect('/dashboard/')
+
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        login = request.POST.get('login')
+        email = request.POST.get('email')
+        fotoPerfil = request.FILES['fotoPerfil']
+        fotoCapa = request.FILES['fotoCapa']
+        descricao = request.POST.get('descricaoConfeiteiro')
+        estado = request.POST.get('estado')
+        cidade = request.POST.get('cidade')
+        logradouro = request.POST.get('logradouro')
+        user_id = recuperar_elemento_da_session(request, 'id_do_usuario')
+
+        # Salvar imagem no servidor
+        file_system = FileSystemStorage()
+        nome_da_foto_perfil = file_system.save(fotoPerfil.name, fotoPerfil)
+        nome_da_foto_capa = file_system.save(fotoCapa.name, fotoCapa)
+
+        # Salvar nome da imagem no banco de dados
+        confeiteiro = selecionar_confeiteiro_por_id(user_id)
+        confeiteiro.nome = nome
+        confeiteiro.login = login
+        confeiteiro.email = email
+        confeiteiro.foto_perfil = nome_da_foto_perfil
+        confeiteiro.foto_capa = nome_da_foto_capa
+        confeiteiro.descricao = descricao
+        confeiteiro.estado = estado
+        confeiteiro.cidade = cidade
+        confeiteiro.endereco = logradouro
+
+        confeiteiro.save()
+
+        return redirect('/dashboard/')
 
 
 def nova_postagem(request):
